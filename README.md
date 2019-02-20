@@ -6,7 +6,11 @@
 2. Build Verification (Credo, Dialyzer, Tests, etc)
 3. CI/CD (CircleCI Free Tier)
 4. Remote Deployment Tools (Libcluster + Gigalixir Free Tier)
-5. If time, talk hot code swaps and more real distribution! (Maybe just demoing hot code is cooler idk)
+5. If time, talk hot code swaps or more real distribution!
+
+(Maybe just demoing hot code is cooler idk, could spin up a GenServer that does some cool thing on a timer and hot code swap without losing state and with no disk persistance)
+
+(Con on distribution is really with Erlang VM its just a bit of config and piping through networking, the harder part is software behavior and design i.e. are there distribution not-friendly-features etc, and that's way to big to do more that give lip service too).
 
 First steps:
 
