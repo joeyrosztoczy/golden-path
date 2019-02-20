@@ -1,5 +1,13 @@
 # Tutorial on DevOps for Denver Elixir Meetup
 
+### Tutorial needs to cover weeks of content in 30 minutes, so we lean on:
+
+1. Releases (Distillery)
+2. Build Verification (Credo, Dialyzer, Tests, etc)
+3. CI/CD (CircleCI Free Tier)
+4. Remote Deployment Tools (Libcluster + Gigalixir Free Tier)
+5. If time, talk hot code swaps and more real distribution! (Maybe just demoing hot code is cooler idk)
+
 First steps:
 
 1. Clone me `$ git clone https://github.com/joeyrosztoczy/golden-path.git`
@@ -21,4 +29,13 @@ Test your project / dev server before things get wild:
 
 // Create proddb, run release with PROD in foreground to test
 
+// Explain runtime vs buildtime configuration etc!
+
 5. We're now at branch `s2-that-release-tho`. We can build a release that is a self-contained artifact of our entire phoenix application.
+
+// Next Branch Stops:
+
+I. How do we know build is good: Configure Credo, Dialyzer, Tests, CI Server, MIX CI Task
+II. Want to get build out: Deploy task to ship to gigalixir free tier & demo on remote server
+III. Use the battle tank: Add libcluster to punch through k8s in Gigalixir, and demo remote observer (this also essentially coveres non-behavioral aspects of distribution kind of and at speed, may need to highlight how this works)
+IV.
