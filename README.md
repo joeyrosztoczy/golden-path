@@ -12,3 +12,8 @@ Test your project / dev server before things get wild:
   * Create and migrate your database with `mix ecto.setup`
   * Install Node.js dependencies with `cd assets && npm install`
   * Start Phoenix endpoint with `mix phx.server`
+  
+4. [Distillery](https://github.com/bitwalker/distillery) is going to help us perform the grunt work of building the Erlang Release. It's currently the only dependency added to the project.
+
+     - First, run the Distillery provided command `$ mix release.init` from your project root. We're creating a `rel/` directory, and a `rel/config.exs` script. We'll use this directory to store such awesomeness as: (1) runtime configuration for our application, (2) configuration parameters for the Erlang VM, (3) commands that we can run remotely such as seeding, etc.
+
