@@ -20,3 +20,5 @@ Test your project / dev server before things get wild:
 // Update config/prod.exs, compile with PROD, build static assets (node run deploy, mix phx.digest), create PROD release
 
 // Create proddb, run release with PROD in foreground to test
+
+5. We're now at branch `s2-that-release-tho`. We can build a release that is a self-contained artifact of our entire phoenix application.
