@@ -45,6 +45,7 @@ defmodule GoldenPath.MixProject do
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
       # Our applications deps
+      {:credo, "~> 1.0", only: [:dev, :test], runtime: false},
       {:distillery, "~> 2.0"}
     ]
   end
