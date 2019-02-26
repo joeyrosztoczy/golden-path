@@ -1,11 +1,13 @@
 # Tutorial on DevOps for Denver Elixir Meetup
 
-### Tutorial needs to cover weeks of content in 30 minutes, so we lean on:
+### Talk covers weeks of content in 30 minutes, so we'll introduce practical abstractions where needed to build an entire devOps/CI/CD Pipeline.
 
-1. Releases (Distillery)
-2. Build Verification (Credo, Dialyzer, Tests, etc)
-3. CI/CD (CircleCI Free Tier)
-4. Remote Deployment Tools (Libcluster + Gigalixir Free Tier)
+These abstractions and tool choices provide a fully-functional pipeline, but also allow an engineer to deep dive into whatever particular area of the pipeline they're more interested in, without losing benefits of the full integration.
+
+1. To Abstract Releases: Distillery
+2. Build Verification Tools: Compiler, Credo, Dialyzer, ExUnit + Coveralls
+3. CI Server: Hosted CircleCI Free Tier
+4. Cloud Management + Machines: Gigalixir Free Tier + Libcluster
 5. If time, talk hot code swaps or more real distribution!
 
 (Maybe just demoing hot code is cooler idk, could spin up a GenServer that does some cool thing on a timer and hot code swap without losing state and with no disk persistance)
