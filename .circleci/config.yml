@@ -1,0 +1,182 @@
+# Reference: https://circleci.com/docs/2.0/configuration-reference/
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/elixir:1.7.2
+        environment:
+          MIX_ENV: test
+    working_directory: ~/app
+    steps:
+      # Checkout.
+      - restore_cache:
+          keys:
+            - git-cache-{{ .Environment.CIRCLECI_CACHE_VERSION }}-{{ .Branch }}-{{ .Revision }}
+            - git-cache-{{ .Environment.CIRCLECI_CACHE_VERSION }}-{{ .Branch }}-
+            - git-cache-{{ .Environment.CIRCLECI_CACHE_VERSION }}-
+      - checkout
+      - save_cache:
+          key: git-cache-{{ .Environment.CIRCLECI_CACHE_VERSION }}-{{ .Branch }}-{{ .Revision }}
+          paths: [".git"]
+      # Install tools.
+      - run: mix local.hex --force
+      - run: mix local.rebar --force
+      # Dependencies.
+      - restore_cache:
+          keys:
+            - deps-cache-{{ .Environment.CIRCLECI_CACHE_VERSION }}-{{ checksum "mix.lock" }}
+            - deps-cache-{{ .Environment.CIRCLECI_CACHE_VERSION }}-
+      - run: mix deps.get
+      - save_cache:
+          key: deps-cache-{{ .Environment.CIRCLECI_CACHE_VERSION }}-{{ checksum "mix.lock" }}
+          paths: ["deps"]
+      # Build.
+      - restore_cache:
+          keys:
+            - build-cache-{{ .Environment.CIRCLECI_CACHE_VERSION }}-{{ .Branch }}-{{ .Revision }}
+            - build-cache-{{ .Environment.CIRCLECI_CACHE_VERSION }}-{{ .Branch }}-
+            - build-cache-{{ .Environment.CIRCLECI_CACHE_VERSION }}-
+      - run: mix compile
+      - save_cache:
+          key: build-cache-{{ .Environment.CIRCLECI_CACHE_VERSION }}-{{ .Branch }}-{{ .Revision }}
+          paths: ["_build"]
+
+  test:
+    docker:
+      - image: circleci/elixir:1.7.2
+        environment:
+          MIX_ENV: test
+      - image: circleci/postgres:10.4-alpine-postgis
+        environment:
+          POSTGRES_USER: postgres
+          POSTGRES_DB: golden_path_test
+    working_directory: ~/app
+    steps:
+      # Checkout.
+      - restore_cache:
+          keys:
+            - git-cache-{{ .Environment.CIRCLECI_CACHE_VERSION }}-{{ .Branch }}-{{ .Revision }}
+            - git-cache-{{ .Environment.CIRCLECI_CACHE_VERSION }}-{{ .Branch }}-
+            - git-cache-{{ .Environment.CIRCLECI_CACHE_VERSION }}-
+      - checkout
+      # Install tools.
+      - run: mix local.hex --force
+      - run: mix local.rebar --force
+      # Dependencies.
+      - restore_cache:
+          keys:
+            - deps-cache-{{ .Environment.CIRCLECI_CACHE_VERSION }}-{{ checksum "mix.lock" }}
+            - deps-cache-{{ .Environment.CIRCLECI_CACHE_VERSION }}-
+      # Build.
+      - restore_cache:
+          keys:
+            - build-cache-{{ .Environment.CIRCLECI_CACHE_VERSION }}-{{ .Branch }}-{{ .Revision }}
+            - build-cache-{{ .Environment.CIRCLECI_CACHE_VERSION }}-{{ .Branch }}-
+            - build-cache-{{ .Environment.CIRCLECI_CACHE_VERSION }}-
+      # Unfortunately needed for Bcrypt.
+      - run: rm -rf _build/test/lib/bcrypt_elixir && mix compile
+      ##
+      ## Test.
+      ##
+      - run:
+          name: Waiting for postgres...
+          command: dockerize -wait tcp://localhost:5432 -timeout 15s
+      - run: mkdir _build/test/junit
+      - run: touch _build/test/junit/junit_results.xml
+      - run: mix test
+      - store_test_results:
+          path: _build/test/junit
+
+  credo:
+    docker:
+      - image: circleci/elixir:1.7.2
+        environment:
+          MIX_ENV: dev
+    working_directory: ~/app
+    steps:
+      # Checkout.
+      - restore_cache:
+          keys:
+            - git-cache-{{ .Environment.CIRCLECI_CACHE_VERSION }}-{{ .Branch }}-{{ .Revision }}
+            - git-cache-{{ .Environment.CIRCLECI_CACHE_VERSION }}-{{ .Branch }}-
+            - git-cache-{{ .Environment.CIRCLECI_CACHE_VERSION }}-
+      - checkout
+      # Install tools.
+      - run: mix local.hex --force
+      - run: mix local.rebar --force
+      # Dependencies.
+      - restore_cache:
+          keys:
+            - deps-cache-{{ .Environment.CIRCLECI_CACHE_VERSION }}-{{ checksum "mix.lock" }}
+            - deps-cache-{{ .Environment.CIRCLECI_CACHE_VERSION }}-
+      # Build.
+      - restore_cache:
+          keys:
+            - build-cache-{{ .Environment.CIRCLECI_CACHE_VERSION }}-{{ .Branch }}-{{ .Revision }}
+            - build-cache-{{ .Environment.CIRCLECI_CACHE_VERSION }}-{{ .Branch }}-
+            - build-cache-{{ .Environment.CIRCLECI_CACHE_VERSION }}-
+      ##
+      ## Credo.
+      ##
+      - run: mix credo
+
+  dialyzer:
+    docker:
+      - image: circleci/elixir:1.7.2
+        environment:
+          MIX_ENV: dev
+    working_directory: ~/app
+    steps:
+      # Checkout.
+      - restore_cache:
+          keys:
+            - git-cache-{{ .Environment.CIRCLECI_CACHE_VERSION }}-{{ .Branch }}-{{ .Revision }}
+            - git-cache-{{ .Environment.CIRCLECI_CACHE_VERSION }}-{{ .Branch }}-
+            - git-cache-{{ .Environment.CIRCLECI_CACHE_VERSION }}-
+      - checkout
+      # Install tools.
+      - run: mix local.hex --force
+      - run: mix local.rebar --force
+      # Dependencies.
+      - restore_cache:
+          keys:
+            - deps-cache-{{ .Environment.CIRCLECI_CACHE_VERSION }}-{{ checksum "mix.lock" }}
+            - deps-cache-{{ .Environment.CIRCLECI_CACHE_VERSION }}-
+      # Build.
+      - restore_cache:
+          keys:
+            - build-cache-{{ .Environment.CIRCLECI_CACHE_VERSION }}-{{ .Branch }}-{{ .Revision }}
+            - build-cache-{{ .Environment.CIRCLECI_CACHE_VERSION }}-{{ .Branch }}-
+            - build-cache-{{ .Environment.CIRCLECI_CACHE_VERSION }}-
+      ##
+      ## Dialyzer.
+      ##
+      ## Running dialyzer updates _build so we need to cache again.
+      ## This cache of _build does not override the previous cache but is merged.
+      - restore_cache:
+          keys:
+            - plt-cache-{{ .Environment.CIRCLECI_CACHE_VERSION }}-{{ checksum "mix.lock" }}
+            - plt-cache-{{ .Environment.CIRCLECI_CACHE_VERSION }}-
+      - run: mix dialyzer --halt-exit-status
+      - save_cache:
+          key: plt-cache-{{ .Environment.CIRCLECI_CACHE_VERSION }}-{{ checksum "mix.lock" }}
+          paths: ["_build"]
+workflows:
+  version: 2
+  verify_build:
+    # Any non-deploy branch:
+    #           / [test]
+    # [build] ->  [credo]
+    #           \ [dialyzer]
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
+      - credo:
+          requires:
+            - build
+      - dialyzer:
+          requires:
+            - build
+
