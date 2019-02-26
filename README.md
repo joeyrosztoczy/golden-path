@@ -43,7 +43,10 @@ Test your project / dev server before things get wild:
 
 // Next Branch Stops:
 
-I. How do we know build is good: Configure Credo, Dialyzer, Tests, CI Server, MIX CI Task
+I. Review Build Verification
+https://github.com/joeyrosztoczy/golden-path/pull/3
+II. Review Continuous Integration Server
+https://github.com/joeyrosztoczy/golden-path/pull/4
 II. Want to get build out: Deploy task to ship to gigalixir free tier & demo on remote server
 III. Use the battle tank: Add libcluster to punch through k8s in Gigalixir, and demo remote observer (this also essentially coveres non-behavioral aspects of distribution kind of and at speed, may need to highlight how this works)
 IV.
