@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/joeyrosztoczy/golden-path.svg?style=shield)](https://circleci.com/gh/joeyrosztoczy/golden-path)
+
 # Tutorial on DevOps for Denver Elixir Meetup
 
 ### Talk covers weeks of content in 30 minutes, so we'll introduce practical abstractions where needed to build an entire devOps/CI/CD Pipeline.
