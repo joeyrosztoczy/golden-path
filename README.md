@@ -1,5 +1,19 @@
 [![CircleCI](https://circleci.com/gh/joeyrosztoczy/golden-path.svg?style=shield)](https://circleci.com/gh/joeyrosztoczy/golden-path)
 
+
+Features TODOS:
+- [X] Release
+- [X] Build Verification
+- [X] CI Server Setup & Config
+- [ ] Remote Deployment + Runtime Tools
+- [ ] Walkthrough from cloning to deploying on instance to getting Observer locally ran
+- [ ] Highlight Config Providers / runtime vs build time etc
+- [ ] Highlight distribution
+- [ ] Add Sweet Picture Depictions of each step/stage
+- [ ] Mention Environment Replication
+
+
+
 # Tutorial on DevOps for Denver Elixir Meetup
 
 ### Talk covers weeks of content in 30 minutes, so we'll introduce practical abstractions where needed to build an entire devOps/CI/CD Pipeline.
