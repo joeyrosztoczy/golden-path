@@ -5,7 +5,7 @@ Features TODOS:
 - [X] Release
 - [X] Build Verification
 - [X] CI Server Setup & Config
-- [ ] Remote Deployment + Runtime Tools
+- [ ] Remote Deployment + Runtime Tools (Mini TODOs: Database, verify working, ssh, ps:observer wire up)
 - [ ] Walkthrough from cloning to deploying on instance to getting Observer locally ran
 - [ ] Highlight Config Providers / runtime vs build time etc
 - [ ] Highlight distribution
