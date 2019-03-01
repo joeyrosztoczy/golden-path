@@ -11,6 +11,7 @@ These abstractions and tool choices provide a fully-functional pipeline, but als
 3. CI Server: Hosted CircleCI Free Tier
 4. Cloud Management + Machines: Gigalixir Free Tier + Libcluster
 5. If time, talk hot code swaps or more real distribution!
+6. Worth talking about environment replication, too app specific to template though.
 
 (Maybe just demoing hot code is cooler idk, could spin up a GenServer that does some cool thing on a timer and hot code swap without losing state and with no disk persistance)
 
