@@ -56,8 +56,7 @@ release :golden_path do
 
   set(
     commands: [
-      migrate: "rel/commands/migrate.sh",
-      seed: "rel/commands/seed.sh"
+      migrate: "rel/commands/migrate.sh"
     ]
   )
 
