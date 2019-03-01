@@ -56,7 +56,8 @@ defmodule GoldenPath.MixProject do
       {:excoveralls, "~> 0.8", only: :test},
       {:credo, "~> 1.0", only: [:dev, :test], runtime: false},
       {:dialyxir, "~> 1.0.0-rc.4", only: [:dev], runtime: false},
-      {:distillery, "~> 2.0"}
+      {:distillery, "~> 2.0"},
+      {:libcluster, "~> 3.0.3"}
     ]
   end
 

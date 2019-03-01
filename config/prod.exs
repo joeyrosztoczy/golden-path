@@ -10,13 +10,29 @@ use Mix.Config
 # which you should run after static files are built and
 # before starting your production server.
 config :golden_path, GoldenPathWeb.Endpoint,
-  http: [port: {:system, "PORT"}],
-  # This is critical for ensuring web-sockets properly authorize.
-  url: [host: "localhost", port: {:system, "PORT"}],
   cache_static_manifest: "priv/static/cache_manifest.json",
+  code_reloader: false,
+  # We set a default port otherwise we can't run `MIX_ENV=prod mix release` without setting PORT
+  # in our local environmnet (because of the string to integer conversion). "1234" is irrelevant.
+  http: [port: String.to_integer(System.get_env("PORT") || "1234")],
+  # This is critical for ensuring web-sockets properly authorize.
+  secret_key_base: System.get_env("SECRET_KEY_BASE"),
   server: true,
   root: ".",
+  url: [host: System.get_env("HOSTNAME")],
   version: Application.spec(:golden_path, :vsn)
+
+config :golden_path, GoldenPath.Repo,
+  adapter: Ecto.Adapters.Postgres,
+  types: Farm.PostgresTypes,
+  # Instead of "USERNAME", "PASSWORD", "DATABASE" and "HOSTNAME" env vars,
+  # we use the `url` syntax to define our database connection parameters:
+  # `ecto://username:password@hostname:5432/database`
+  url: System.get_env("FARM_DATABASE_URL"),
+  pool_size: 2,
+  ssl: true,
+  timeout: 1_500,
+  pool_timeout: 1_500
 
 # Do not print debug messages in production
 config :logger, level: :info
