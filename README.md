@@ -6,9 +6,10 @@ Features TODOS:
 - [X] Build Verification
 - [X] CI Server Setup & Config
 - [X] Remote Deployment + Runtime Tools (Mini TODOs: Database, verify working, ssh, ps:observer wire up)
-- [ ] Walkthrough from cloning to deploying on instance to getting Observer locally ran
+- [X] Walkthrough from cloning to deploying on instance to getting Observer locally ran
 - [ ] Highlight Config Providers / runtime vs build time etc
 - [ ] Highlight distribution
+- [ ] Add a stateful process + hot swap (in post-final PR)
 - [ ] Add Sweet Picture Depictions of each step/stage
 - [ ] Mention Environment Replication
 
