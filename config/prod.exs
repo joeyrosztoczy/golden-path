@@ -24,11 +24,10 @@ config :golden_path, GoldenPathWeb.Endpoint,
 
 config :golden_path, GoldenPath.Repo,
   adapter: Ecto.Adapters.Postgres,
-  types: Farm.PostgresTypes,
   # Instead of "USERNAME", "PASSWORD", "DATABASE" and "HOSTNAME" env vars,
   # we use the `url` syntax to define our database connection parameters:
   # `ecto://username:password@hostname:5432/database`
-  url: System.get_env("FARM_DATABASE_URL"),
+  url: System.get_env("DATABASE_URL"),
   pool_size: 2,
   ssl: true,
   timeout: 1_500,
