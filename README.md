@@ -5,7 +5,7 @@ Features TODOS:
 - [X] Release
 - [X] Build Verification
 - [X] CI Server Setup & Config
-- [ ] Remote Deployment + Runtime Tools (Mini TODOs: Database, verify working, ssh, ps:observer wire up)
+- [X] Remote Deployment + Runtime Tools (Mini TODOs: Database, verify working, ssh, ps:observer wire up)
 - [ ] Walkthrough from cloning to deploying on instance to getting Observer locally ran
 - [ ] Highlight Config Providers / runtime vs build time etc
 - [ ] Highlight distribution
@@ -26,6 +26,28 @@ These abstractions and tool choices provide a fully-functional pipeline, but als
 4. Cloud Management + Machines: Gigalixir Free Tier + Libcluster
 5. If time, talk hot code swaps or more real distribution!
 6. Worth talking about environment replication, too app specific to template though.
+
+### If you just want a release-ready template that can be remotely deployed to Gigalixir as is, do this:
+
+1. Clone the project `$ git clone https://github.com/joeyrosztoczy/golden-path.git`
+2. `$ cd golden-path`
+3. Skip to the final setup `$ git checkout final`
+
+Test your project / dev server before things get wild:
+
+  * Install dependencies with `mix deps.get`
+  * Create and migrate your database with `mix ecto.setup`
+  * Install Node.js dependencies with `cd assets && npm install`
+  * Start Phoenix endpoint with `mix phx.server`
+  
+4. Manually verify the build with ```$ mix verify_build```
+5. Setup a free CircleCI account: https://circleci.com/docs/2.0/first-steps/#section=getting-started
+6. Setup a free Gigalixir account: https://gigalixir.readthedocs.io/en/latest/main.html#getting-started-guide
+7. Create the Gigalixir App: https://gigalixir.readthedocs.io/en/latest/main.html#how-to-create-an-app
+8. Create a free Postgresql db: https://gigalixir.readthedocs.io/en/latest/main.html#how-to-provision-a-free-postgresql-database
+9. Deploy your app via the gigalixir remote with ```$ git push gigalixir final:master```
+10. Verify the deployment with ```$ gigalixir logs -a golden-path```
+11. Assuming you've added SSH keys, kick off Observer with ```$ gigalixir ps:observer -a golden-path``` (and select the remote node to inspect).
 
 (Maybe just demoing hot code is cooler idk, could spin up a GenServer that does some cool thing on a timer and hot code swap without losing state and with no disk persistance)
 
