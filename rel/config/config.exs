@@ -60,7 +60,7 @@ config :golden_path, GoldenPathWeb.Endpoint,
   url: [host: System.get_env("GOLDENPATH_HOSTNAME")]
 
 # Configure the database.
-config :golden_path, GoldenPath.Repo, url: System.get_env("GOLDENPATH_DATABASE_URL")
+config :golden_path, GoldenPath.Repo, url: System.get_env("DATABASE_URL")
 
 # Configure node-clustering, with k8s strategy (which Gigalixir uses)
 # so we can open up nodes for remote consoles/observers.
