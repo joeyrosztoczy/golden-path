@@ -1,20 +1,6 @@
 [![CircleCI](https://circleci.com/gh/joeyrosztoczy/golden-path.svg?style=shield)](https://circleci.com/gh/joeyrosztoczy/golden-path)
 
 
-Features TODOS:
-- [X] Release
-- [X] Build Verification
-- [X] CI Server Setup & Config
-- [X] Remote Deployment + Runtime Tools (Mini TODOs: Database, verify working, ssh, ps:observer wire up)
-- [X] Walkthrough from cloning to deploying on instance to getting Observer locally ran
-- [ ] Highlight Config Providers / runtime vs build time etc
-- [ ] Highlight distribution
-- [ ] Add a stateful process + hot swap (in post-final PR)
-- [ ] Add Sweet Picture Depictions of each step/stage
-- [ ] Mention Environment Replication
-
-
-
 # Tutorial on DevOps for Denver Elixir Meetup
 
 ### Talk covers weeks of content in 30 minutes, so we'll introduce practical abstractions where needed to build an entire devOps/CI/CD Pipeline.
@@ -32,7 +18,7 @@ These abstractions and tool choices provide a fully-functional pipeline, but als
 
 1. Clone the project `$ git clone https://github.com/joeyrosztoczy/golden-path.git`
 2. `$ cd golden-path`
-3. Skip to the final setup `$ git checkout final`
+3. The final setup is the current master branch
 
 Test your project / dev server before things get wild:
 
@@ -46,15 +32,11 @@ Test your project / dev server before things get wild:
 6. Setup a free Gigalixir account: https://gigalixir.readthedocs.io/en/latest/main.html#getting-started-guide
 7. Create the Gigalixir App: https://gigalixir.readthedocs.io/en/latest/main.html#how-to-create-an-app
 8. Create a free Postgresql db: https://gigalixir.readthedocs.io/en/latest/main.html#how-to-provision-a-free-postgresql-database
-9. Deploy your app via the gigalixir remote with ```$ git push gigalixir final:master```
+9. Deploy your app via the gigalixir remote with ```$ git push gigalixir master```
 10. Verify the deployment with ```$ gigalixir logs -a golden-path```
 11. Assuming you've added SSH keys, kick off Observer with ```$ gigalixir ps:observer -a golden-path``` (and select the remote node to inspect).
 
-(Maybe just demoing hot code is cooler idk, could spin up a GenServer that does some cool thing on a timer and hot code swap without losing state and with no disk persistance)
-
-(Con on distribution is really with Erlang VM its just a bit of config and piping through networking, the harder part is software behavior and design i.e. are there distribution not-friendly-features etc, and that's way to big to do more that give lip service too).
-
-First steps:
+### If you want to follow along or build it out step by step, do this:
 
 1. Clone me `$ git clone https://github.com/joeyrosztoczy/golden-path.git`
 2. `$ cd golden-path`
@@ -71,20 +53,10 @@ Test your project / dev server before things get wild:
 
      - First, run the Distillery provided command `$ mix release.init` from your project root. We're creating a `rel/` directory, and a `rel/config.exs` script. We'll use this directory to store such awesomeness as: (1) runtime configuration for our application, (2) configuration parameters for the Erlang VM, (3) commands that we can run remotely such as seeding, etc.
 
-// Update config/prod.exs, compile with PROD, build static assets (node run deploy, mix phx.digest), create PROD release
+5. To see the build verifcation task and updates, review this PR: https://github.com/joeyrosztoczy/golden-path/pull/3
 
-// Create proddb, run release with PROD in foreground to test
+6. To see the configuration for CircleCI, and be able to launch a project there, review: https://github.com/joeyrosztoczy/golden-path/pull/4
 
-// Explain runtime vs buildtime configuration etc!
+7. To launch a remote deployment via Gigalixir, and use cluster-based tools like Observer, review: https://github.com/joeyrosztoczy/golden-path/pull/5
 
-5. We're now at branch `s2-that-release-tho`. We can build a release that is a self-contained artifact of our entire phoenix application.
 
-// Next Branch Stops:
-
-I. Review Build Verification
-https://github.com/joeyrosztoczy/golden-path/pull/3
-II. Review Continuous Integration Server
-https://github.com/joeyrosztoczy/golden-path/pull/4
-II. Want to get build out: Deploy task to ship to gigalixir free tier & demo on remote server
-III. Use the battle tank: Add libcluster to punch through k8s in Gigalixir, and demo remote observer (this also essentially coveres non-behavioral aspects of distribution kind of and at speed, may need to highlight how this works)
-IV.
