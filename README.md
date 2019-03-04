@@ -17,3 +17,8 @@ Test your project / dev server before things get wild:
 
      - First, run the Distillery provided command `$ mix release.init` from your project root. We're creating a `rel/` directory, and a `rel/config.exs` script. We'll use this directory to store such awesomeness as: (1) runtime configuration for our application, (2) configuration parameters for the Erlang VM, (3) commands that we can run remotely such as seeding, etc.
 
+// Update config/prod.exs, compile with PROD, build static assets (node run deploy, mix phx.digest), create PROD release
+
+// Create proddb, run release with PROD in foreground to test
+
+5. We're now at branch `s2-that-release-tho`. We can build a release that is a self-contained artifact of our entire phoenix application.
