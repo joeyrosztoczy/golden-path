@@ -1,5 +1,6 @@
 [![CircleCI](https://circleci.com/gh/joeyrosztoczy/golden-path.svg?style=shield)](https://circleci.com/gh/joeyrosztoczy/golden-path)
 
+Note: If somethings not working, you get stuck, etc feel free to file an issue or even better a PR ^^. I won't be super timely because in crunch time on a few projects through March, but will periodically check it out! Cheers <3
 
 # Tutorial on DevOps for Denver Elixir Meetup
 
